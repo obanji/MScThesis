@@ -1,8 +1,8 @@
 run:
-	gcc -g subject/lisp/lisp.c -lm
-	#gcc -g subject/calc/calc_parse.c
+	# gcc -g subject/duktape/duktape.c -lm
+	gcc -g subject/url/urlparse.c
 	#gcc -g subject/komplott/swizzle.c -ldl
-	gdb --batch-silent -x miner.py
+	gdb --batch-silent -x ExecutionTree.py
 clean:
 	rm tree
 	rm a.out
