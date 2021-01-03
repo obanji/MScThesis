@@ -1,1 +1,1 @@
-# MScThesis
+# BMiner
