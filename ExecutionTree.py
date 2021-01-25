@@ -364,7 +364,7 @@ def read_register_val(reg, original):
         return val
     else:
         x = val[1: -1] if val[0] == '"' and val[-1] == '"' else val
-        return x if x in original else None
+        return x if x in original else read_register_val(a, original)
 def read_ptr_addr(reg):
     try:
         str1 = gdb.execute('x/a %s' % (reg), to_string=True)
