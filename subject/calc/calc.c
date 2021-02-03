@@ -61,6 +61,8 @@ void parse_expr(my_arg *arg) {
     } else if (c == ')') {
       break;
     }
+    else {
+    }
   }
 }
 

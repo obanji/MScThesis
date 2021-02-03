@@ -7,3 +7,4 @@ clean:
 	rm tree
 	rm a.out
 	rm gdb.txt
+	rm updated_comparisons
