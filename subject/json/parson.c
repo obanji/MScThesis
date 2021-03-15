@@ -800,7 +800,9 @@ static JSON_Value * parse_array_value(const char **string, size_t nesting) {
         SKIP_CHAR(string);
         return output_value;
     }
+
     while (**string != '\0') {
+        printf("%c", **string);
         new_array_value = parse_value(string, nesting);
         if (new_array_value == NULL) {
             json_value_free(output_value);
@@ -865,6 +867,7 @@ static JSON_Value * parse_number_value(const char **string) {
         return NULL;
     }
     *string = end;
+    number = strtod(*string, &end);
     return json_value_init_number(number);
 }
 

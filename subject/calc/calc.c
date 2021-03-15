@@ -62,6 +62,7 @@ void parse_expr(my_arg *arg) {
       break;
     }
     else {
+      arg->idx += 1;
     }
   }
 }

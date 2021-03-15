@@ -4,7 +4,9 @@ run:
 	#gcc -g subject/komplott/swizzle.c -ldl
 	gdb --batch-silent -x ExecutionTree.py
 clean:
-	rm tree
 	rm a.out
+	rm inp.0.txt
 	rm gdb.txt
 	rm updated_comparisons
+	rm tree
+	rm check
