@@ -10,3 +10,5 @@ clean:
 	rm updated_comparisons
 	rm tree
 	rm check
+	rm comparison.txt
+	rm check
