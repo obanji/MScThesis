@@ -8700,6 +8700,7 @@ int main(int argc, char *argv[]) {
     strcpy(my_string, argv[1]);
     strip_input(my_string);
 
+    printf("%s", my_string);
     ret = parse_mjs(my_string);
     return ret;
 }

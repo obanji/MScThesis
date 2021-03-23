@@ -323,5 +323,5 @@ int main(int argc, char *argv[]) {
     strip_input(my_string);
     
     ret = parse_expr(my_string);
-    return ret;
+    return 0;
 }

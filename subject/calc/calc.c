@@ -72,4 +72,5 @@ int main(int argc, char *argv[]) {
     strcpy(arg.my_string, argv[1]);
     arg.idx = 0;
     parse_expr(&arg);
+    return 0;
 }

@@ -619,5 +619,6 @@ int csv_insert_field(CSV_BUFFER *buffer, size_t row, size_t entry,
 }
 int main(int argc, char* argv[]) {
         CSV_BUFFER *my_buffer = csv_create_buffer();
-        csv_load(my_buffer, "inp.0.txt");
+        int result = csv_load(my_buffer, "inp.0.txt");
+        return result;
 }
