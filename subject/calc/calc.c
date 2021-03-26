@@ -13,17 +13,7 @@ typedef struct str {
 void parse_num(my_arg *arg);
 void parse_expr(my_arg *arg);
 void parse_paren(my_arg *arg);
-int nesting = 0;
 
-void tab_enter(char* proc, my_arg* arg) {
-  for (int i = 0; i < nesting; i++)fprintf(stderr, "\t"); fprintf(stderr,"-> %s %d\n", proc, arg->idx);
-  nesting += 1;
-}
-
-void tab_exit(char* proc, my_arg* arg) {
-  nesting -= 1;
-  for (int i = 0; i < nesting; i++)fprintf(stderr,"\t"); fprintf(stderr,"<- %s %d\n", proc, arg->idx);
-}
 
 void parse_num(my_arg *arg) {
   for (;arg->idx < strlen(arg->my_string); arg->idx++) {
@@ -37,13 +27,15 @@ void parse_num(my_arg *arg) {
 
 void parse_paren(my_arg *arg) {
   char c = arg->my_string[arg->idx];
-  if (c != '(') {
+  char paren_open = '(';
+  if (c != paren_open) {
     printf("Invalid parse!\n");
     return;
   }
   arg->idx += 1;
   parse_expr(arg);
-  if (arg->my_string[arg->idx] != ')') {
+  char paren_close = ')';
+  if (arg->my_string[arg->idx] != paren_close) {
     return;
   }
   arg->idx += 1;
@@ -72,5 +64,4 @@ int main(int argc, char *argv[]) {
     strcpy(arg.my_string, argv[1]);
     arg.idx = 0;
     parse_expr(&arg);
-    return 0;
 }
