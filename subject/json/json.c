@@ -242,7 +242,7 @@ int main(int argc, char *argv[]) {
   
   strcpy(my_string, argv[1]);
   ret = json_parse(my_string, &result);
-  json_free_value(&result);
+  // json_free_value(&result);
   
   return 0;
 }

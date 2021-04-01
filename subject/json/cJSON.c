@@ -1342,7 +1342,7 @@ static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buf
 {
     cJSON *head = NULL; /* head of the linked list */
     cJSON *current_item = NULL;
-    // char c = buffer_at_offset(input_buffer)[0];
+    char c = buffer_at_offset(input_buffer)[0];
 
     if (input_buffer->depth >= CJSON_NESTING_LIMIT)
     {
@@ -1376,8 +1376,6 @@ static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buf
     /* loop through the comma separated array elements */
     do
     {
-        // char c = buffer_at_offset(input_buffer)[0];
-        // printf("%c", c);
         /* allocate next item */
         cJSON *new_item = cJSON_New_Item(&(input_buffer->hooks));
         if (new_item == NULL)
@@ -1500,7 +1498,7 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
 {
     cJSON *head = NULL; /* linked list head */
     cJSON *current_item = NULL;
-    // char c = buffer_at_offset(input_buffer)[0];
+    char c = buffer_at_offset(input_buffer)[0];
 
     if (input_buffer->depth >= CJSON_NESTING_LIMIT)
     {
@@ -1514,7 +1512,6 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
     }
 
     input_buffer->offset++;
-    // c = buffer_at_offset(input_buffer)[0];
     buffer_skip_whitespace(input_buffer);
     if (can_access_at_index(input_buffer, 0) && (buffer_at_offset(input_buffer)[0] == '}'))
     {
@@ -1582,7 +1579,6 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
         buffer_skip_whitespace(input_buffer);
     }
     while (can_access_at_index(input_buffer, 0) && (buffer_at_offset(input_buffer)[0] == ','));
-    // printf("%c", buffer_at_offset(input_buffer)[0]);
     if (cannot_access_at_index(input_buffer, 0) || (buffer_at_offset(input_buffer)[0] != '}'))
     {
         goto fail; /* expected end of object */

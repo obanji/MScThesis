@@ -726,7 +726,8 @@ static JSON_Value * parse_object_value(const char **string, size_t nesting) {
     if (output_value == NULL) {
         return NULL;
     }
-    if (**string != '{') {
+    char c = **string;
+    if (c!= '{') {
         json_value_free(output_value);
         return NULL;
     }
@@ -802,7 +803,6 @@ static JSON_Value * parse_array_value(const char **string, size_t nesting) {
     }
 
     while (**string != '\0') {
-        printf("%c", **string);
         new_array_value = parse_value(string, nesting);
         if (new_array_value == NULL) {
             json_value_free(output_value);

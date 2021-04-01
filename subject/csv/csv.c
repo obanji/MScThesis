@@ -56,7 +56,7 @@ static int read_next_field(FILE *fp,
                 CSV_FIELD *field)
 {
 
-        char ch = 'a';
+        char ch;
 
         bool done = false;
         bool in_text = false;

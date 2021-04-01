@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "stdbool.h"
+#include <assert.h>
+
 #define MAX_STR_SIZE 10000
 
 typedef struct str {
@@ -34,8 +36,7 @@ void parse_paren(my_arg *arg) {
   }
   arg->idx += 1;
   parse_expr(arg);
-  char paren_close = ')';
-  if (arg->my_string[arg->idx] != paren_close) {
+  if (arg->my_string[arg->idx] != ')') {
     return;
   }
   arg->idx += 1;
