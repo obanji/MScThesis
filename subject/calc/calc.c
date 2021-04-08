@@ -3,8 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "stdbool.h"
-#include <assert.h>
-
 #define MAX_STR_SIZE 10000
 
 typedef struct str {

@@ -1412,6 +1412,7 @@ static cJSON_bool parse_array(cJSON * const item, parse_buffer * const input_buf
         goto fail; /* expected end of array */
     }
 
+    char y = ']';
 success:
     input_buffer->depth--;
 
@@ -1583,7 +1584,7 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
     {
         goto fail; /* expected end of object */
     }
-
+    char x = '}';
 success:
     input_buffer->depth--;
 
