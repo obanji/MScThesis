@@ -97,8 +97,9 @@ static int json_parse_array(const char **cursor, json_value *parent) {
     skip_whitespace(cursor);
     /*vector_push_back(&parent->value.array, &new_value);*/
     skip_whitespace(cursor);
-    if (has_char(cursor, ']'))
-      break;
+    if (has_char(cursor, ']')) {
+      char z = ']';
+      break;}
     else if (has_char(cursor, ','))
       continue;
     else
