@@ -384,7 +384,10 @@ const char *url_scheme_string(URLScheme it) {
 
 	return URL_SCHEME_UNKNOWN_STR;
 }
-int main(int argc, char* argv[]) {
-	URL u = { 0 };
-	url_parse(&u, argv[1]);
+
+int main(int argc, char *argv[])
+{
+  URL u = { 0 };
+  url_parse(&u, argv[1]);
+  return 0;
 }

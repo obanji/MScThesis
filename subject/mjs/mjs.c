@@ -261,8 +261,8 @@ static void emit_str(struct pstate *pstate, const char *ptr, size_t len) {
   struct mbuf *b = &pstate->mjs->bcode_gen;
   size_t llen = cs_varint_llen(len);
   add_lineno_map_item(pstate);
-  mbuf_insert(b, pstate->cur_idx, ((void *)0), llen + len);
-  cs_varint_encode(len, (uint8_t *)b->buf + pstate->cur_idx, llen);
+  mbuf_insert(b, pstate->cur_idx, NULL, llen + len);
+  cs_varint_encode(len, (uint8_t *) b->buf + pstate->cur_idx, llen);
   memcpy(b->buf + pstate->cur_idx + llen, ptr, len);
   pstate->cur_idx += llen + len;
 }
@@ -8685,21 +8685,11 @@ int parse_mjs(char* my_string) {
    return 1;
 }
 
-
-void strip_input(char* my_string) {
-    int read = strlen(my_string);
-    if (my_string[read-1] ==  '\n'){
-        my_string[read-1] = '\0';
-    }
-}
-
 int main(int argc, char *argv[]) {
     char my_string[10240];
     int ret;
     
     strcpy(my_string, argv[1]);
-    strip_input(my_string);
-
     ret = parse_mjs(my_string);
     return ret;
 }

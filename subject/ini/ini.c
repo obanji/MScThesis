@@ -203,8 +203,9 @@ static char* find_chars_or_comment(const char* s, const char* chars)
 /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
 static char* strncpy0(char* dest, const char* src, size_t size)
 {
-    strncpy(dest, src, size - 1);
-    dest[size - 1] = '\0';
+    size -= 1;
+    strncpy(dest, src, size);
+    //dest[size - 1] = '\0';
     return dest;
 }
 
@@ -414,8 +415,19 @@ static int handler(void* user, const char* section, const char* name,
     return 1;
 }
 
-int main(int argc, char* argv[]) {
-    configuration config;
-    return ini_parse_string(argv[1], handler, &config);
+void strip_input(char* my_string) {
+    int read = strlen(my_string);
+    if (my_string[read-1] ==  '\n'){
+        my_string[read-1] = '\0';
+    }
+}
 
+int main(int argc, char* argv[]) {
+    char my_string[10240];
+    configuration config;
+
+    strcpy(my_string, argv[1]);
+    strip_input(my_string);
+    return ini_parse_string(my_string, handler, &config);
+    // return ini_parse("inp.0.txt", NULL, &config);
 }

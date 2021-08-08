@@ -315,13 +315,12 @@ void strip_input(char* my_string) {
     }
 }
 
+
 int main(int argc, char *argv[]) {
     char my_string[10240];
     int ret;
     
     strcpy(my_string, argv[1]);
     strip_input(my_string);
-    
-    ret = parse_expr(my_string);
-    return 0;
+    parse_expr(my_string);
 }

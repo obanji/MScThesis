@@ -1,0 +1,22 @@
+mini_mjs_grammar = {
+    '<START>': ['<statement>'],
+    '<statement>': [
+        'if<paren_expr> <statement>', 'function <paren_expr> <statement>',
+        '{<statement>}', '<expr>;', ';', 'return <statement>',
+        'let <statement>;', 'isNaN<paren_expr>', ''
+    ],
+    '<paren_expr>': ['(<expr>)'],
+    '<expr>': ['<test>', '<id> <operator> <expr>', '<operator><expr>'],
+    '<operator>': ['===', '!==', '!', '||', '&&', '+', '<', '<=', '>=', '*'],
+    '<test>': ['<sum>', '<sum> <operator> <sum>'],
+    '<sum>': ['<term>', '<sum> + <term>', '<sum> - <term>'],
+    '<term>': ['<id>', '<int>', '<paren_expr>'],
+    '<id>': ['<text>*'],
+    '<text>':
+    list(string.ascii_letters),
+    '<int>': ['<number>*'],
+    '<number>':
+    list(string.digits)
+}
+
+mini_mjs_grammar = convert_ebnf_grammar(mini_mjs_grammar)

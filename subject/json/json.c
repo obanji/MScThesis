@@ -245,5 +245,5 @@ int main(int argc, char *argv[]) {
   ret = json_parse(my_string, &result);
   // json_free_value(&result);
   
-  return 0;
+  return ret;
 }

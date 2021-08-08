@@ -3918,15 +3918,15 @@ LispContext lisp_init_lib_opt(int symbol_table_size, size_t stack_depth, size_t 
     lisp_table_define_funcs(table, lib_cfunc_defs, ctx);
     Lisp system_env = lisp_env_extend(lisp_make_null(), table, ctx);
     ctx.impl->global_env = lisp_env_extend(system_env, lisp_make_table(20, ctx), ctx);
-    lisp_eval_opt(lisp_read(lib_program_defs, NULL, ctx), system_env, NULL, ctx);
+    //lisp_eval_opt(lisp_read(lib_program_defs, NULL, ctx), system_env, NULL, ctx);
     return ctx;
 }
 
 #endif
 int main(int argc, char *argv[]) {
     LispContext ctx = lisp_init_lib();
-    LispError error;
-    Lisp program = lisp_read(argv[1], &error, ctx);
+    // LispError error;
+    // Lisp program = lisp_read(argv[1], &error, ctx);
 
-    Lisp result = lisp_eval(program, &error, ctx);
+    // Lisp result = lisp_eval(program, &error, ctx);
 }
