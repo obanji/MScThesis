@@ -2179,5 +2179,8 @@ void json_set_escape_slashes(int escape_slashes) {
 int main(int argc, char** argv)
 {
   JSON_Value *json = json_parse_string(argv[1]);  
+  if(json == NULL){
+      return 1;
+  }
   return 0;
 }

@@ -617,6 +617,7 @@ double te_interp(const char *expression, int *error) {
     te_expr *n = te_compile(expression, 0, 0, error);
     double ret;
     if (n) {
+        ret = 0;
         ret = te_eval(n);
         te_free(n);
     } else {
@@ -659,6 +660,6 @@ void te_print(const te_expr *n) {
 int main(int argc, char *argv[]) {
     /* code */
 
-    te_interp(argv[1], 0);
+    te_compile(argv[1], 0, 0, 0);
     return 0;
 }

@@ -214,6 +214,7 @@ static int json_parse_value(const char **cursor, json_value *parent) {
   default: {
     char *end;
     double number = strtod(*cursor, &end);
+    double n = number;
     if (*cursor != end) {
       parent->type = 2 /*TYPE_NUMBER*/;
       parent->value.number = number;
@@ -244,6 +245,8 @@ int main(int argc, char *argv[]) {
   strcpy(my_string, argv[1]);
   ret = json_parse(my_string, &result);
   // json_free_value(&result);
-  
-  return ret;
+  if (ret == 1){
+    return 0;
+  }
+  return 1;
 }

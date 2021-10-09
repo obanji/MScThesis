@@ -66,19 +66,20 @@ const char *intern_string(const char *str) {
 }
 
 int match_number(const char *s) {
-	if (*s == '-' || *s == '+')
-		s++;
-	do {
-		if (*s < '0' || *s > '9')
-			return 0;
-	} while (*++s != '\0');
+	if (*s == '-' || *s == '+') s++;
+	do { if (*s < '0' || *s > '9') return 0; } while (*++s != '\0');
 	return 1;
 }
 
-const char *itos(long n) {
-	char ch[TOKEN_MAX];
-	snprintf(ch, TOKEN_MAX, "%ld", n);
-	return intern_string(ch);
+const char* itos(long n) {
+	char buf[TOKEN_MAX], reversed[TOKEN_MAX];
+	char *p1 = buf, *p2 = reversed;
+	unsigned long u = (unsigned long)n;
+	if (n < 0) { *p1++ = '-'; u = ~u + 1; }
+	do { *p2++ = (char)(u % 10) + '0'; u /= 10; } while (u > 0);
+	do { *p1++ = *--p2; } while (p2 != reversed);
+	*p1 = '\0';
+	return intern_string(buf);
 }
 
 object *new_cfunc(cfunc func) {
@@ -135,7 +136,7 @@ object *lisp_read_list(const char *tok, FILE *in) {
 		gc_pop();
 		if (tok[0] == ')')
 			return obj2;
-		fprintf(stderr, "Error: Malformed dotted cons\n");
+		fputs("Error: Malformed dotted cons\n", stderr);
 		return NULL;
 	}
 	tmp = lisp_read_list(tok, in);
@@ -150,7 +151,7 @@ object *lisp_read(FILE *in) {
 		return NULL;
 	if (tok[0] != ')')
 		return lisp_read_obj(tok, in);
-	fprintf(stderr, "Error: Unexpected )\n");
+	fputs("Error: Unexpected )\n", stderr);
 	return NULL;
 }
 
@@ -280,30 +281,30 @@ restart:
 
 void lisp_print(object *obj) {
 	if (obj == NULL) {
-		printf("()");
+		fputs("()", stdout);
 	} else if (obj->tag == T_ATOM) {
-		printf("%s", TEXT(obj));
+		fputs(TEXT(obj), stdout);
 	} else if (obj->tag == T_CFUNC) {
 		printf("<C@%p>", (void *)obj);
 	} else if (obj->tag == T_LAMBDA) {
-		printf("<lambda ");
+		fputs("<lambda ", stdout);
 		lisp_print(obj->car);
-		printf(">");
+		fputs(">", stdout);
 	} else if (obj->tag == T_CONS) {
-		printf("(");
+		fputs("(", stdout);
 		for (;;) {
 			lisp_print(obj->car);
 			if (obj->cdr == NULL)
 				break;
-			printf(" ");
+			fputs(" ", stdout);
 			if (obj->cdr->tag != T_CONS) {
-				printf(". ");
+				fputs(". ", stdout);
 				lisp_print(obj->cdr);
 				break;
 			}
 			obj = obj->cdr;
 		}
-		printf(")");
+		fputs(")", stdout);
 	}
 }
 
@@ -367,7 +368,7 @@ object *builtin_display(object *args) {
 }
 
 object *builtin_newline(object *args) {
-	printf("\n");
+	puts("");
 	return NULL;
 }
 
@@ -429,7 +430,7 @@ object *gc_alloc(object_tag tag, object *car, object *cdr) {
 			gc_pop();
 	}
 	if (allocptr + 1 > fromspace + HEAPSIZE) {
-		fprintf(stderr, "Out of memory\n");
+		fputs("Out of memory\n", stderr);
 		abort();
 	}
 	allocptr->tag = tag;
@@ -453,6 +454,7 @@ void gc_protect(object **r, ...) {
 void gc_pop(void) {
 	numroots = rootstack[--roottop];
 }
+
 
 int main(int argc, char* argv[]) {
 	gc_init();
@@ -482,14 +484,19 @@ int main(int argc, char* argv[]) {
 	defun(env, "display", &builtin_display);
 	defun(env, "newline", &builtin_newline);
 	defun(env, "read", &builtin_read);
+	
 	FILE *in = fopen("inp.0.txt", "r");
-	for (;;) {
-		obj = lisp_read(in);
-		obj = lisp_eval(obj, env);
-		if (in == stdin) {
-			lisp_print(obj);
-			printf("HELLO\n");
-		}
-	}
+	obj = lisp_read(in);
+	obj = lisp_eval(obj, env);
+	// lisp_print(obj);
+	// puts("");
+	// for (;;) {
+	// 	obj = lisp_read(in);
+	// 	obj = lisp_eval(obj, env);
+	// 	if (in == stdin) {
+	// 		lisp_print(obj);
+	// 		puts("");
+	// 	}
+	// }
 	return 0;
 }

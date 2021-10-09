@@ -3,6 +3,8 @@
 /* Copyright (C) 2001 by Marc Feeley, All Rights Reserved. */
 
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -104,15 +106,18 @@ void next_sym()
             sym = INT;
           }
         else if (ch >= 'a' && ch <= 'z')
-          { int i = 0; /* missing overflow check */
+          { 
+            int i = 0; /* missing overflow check */
             while ((ch >= 'a' && ch <= 'z') || ch == '_')
               { id_name[i++] = ch; next_ch(); }
             id_name[i] = '\0';
             sym = 0;
+
             while (words[sym] != NULL && strcmp(words[sym], id_name) != 0)
               sym++;
             if (words[sym] == NULL)
               if (id_name[1] == '\0') sym = ID; else syntax_error();
+              
           }
         else
           syntax_error();
@@ -120,7 +125,6 @@ void next_sym()
     }
   }
 }
-
 /*---------------------------------------------------------------------------*/
 
 /* Parser. */
@@ -297,8 +301,8 @@ int parse_expr(char* my_string)
 
   c(program());
 
-  for (i=0; i<26; i++)
-    globals[i] = 0;
+//   for (i=0; i<26; i++)
+//     globals[i] = 0;
   return 0;
   /*run(); <- we cant deal with semantics here.
   for (i=0; i<26; i++)
@@ -308,19 +312,42 @@ int parse_expr(char* my_string)
   return 0;*/
 }
 
-void strip_input(char* my_string) {
+/*int strip_input(char* my_string) {
     int read = strlen(my_string);
     if (my_string[read-1] ==  '\n'){
         my_string[read-1] = '\0';
     }
-}
-
+    return read;
+}*/
 
 int main(int argc, char *argv[]) {
     char my_string[10240];
     int ret;
-    
+    // if (argc == 1) {
+    //     int chars = read(fileno(stdin), my_string, 10240);
+    //     if (!chars) {
+    //       exit(1);
+    //     }
+    //     my_string[chars] = 0;
+    //     /*chars = strip_input(my_string);
+    //     if (!chars) {
+    //       exit(2);
+    //     }*/
+    // } else {
+    //     int fd = open(argv[1], O_RDONLY);
+    //     int chars = read(fd, my_string, 10240);
+    //     if (!chars) {
+    //       exit(3);
+    //     }
+    //     my_string[chars] = 0;
+    //     /*chars = strip_input(my_string);
+    //     if (!chars) {
+    //       exit(4);
+    //     }*/
+    //     close(fd);
+    // }
     strcpy(my_string, argv[1]);
-    strip_input(my_string);
-    parse_expr(my_string);
+    // printf("val: <%s>\n", my_string);
+    ret = parse_expr(my_string);
+    return ret;
 }
